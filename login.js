@@ -21,7 +21,9 @@ loginButton.addEventListener('click', (e) => {
     .then( (response) => response.json())
     .then( (data) => {
     	console.log( data );
-    	window.open('admin.html', '_self');
+    	if (data.success) {
+    		window.open('admin.html', '_self');
+    	}
     });
 })	
 
