@@ -1,7 +1,3 @@
-// fetch( 'https://shfe-diplom.neto-server.ru/alldata' )
-//     .then( response => response.json())
-//     .then( data => console.log( data ));
-
 const loginButton = document.getElementById('login')
 
 loginButton.addEventListener('click', (e) => {
@@ -59,7 +55,6 @@ function renderCalendar (date) {
 		calendarItems[0].classList.add('nav__item-active');
 
 		renderFilmCards();
-		console.log('first')
 		for (let i = 0; i < (calendarItems.length - 1); i++) {
 			calendarItems[i].innerHTML = '';
 			chosenDate = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
@@ -91,8 +86,6 @@ function renderCalendar (date) {
 					activeDate = i;
 					renderFilmCards();
 				}
-
-				console.log(chosenDate)
 			})
 
 		}
@@ -108,7 +101,6 @@ function renderCalendar (date) {
 	} else {
 		calendarItems[1].classList.add('nav__item-active');
 		renderFilmCards();
-		console.log('second')
 		for (let i = 1; i < calendarItems.length; i++) {
 			calendarItems[i].innerHTML = '';
 
@@ -136,16 +128,12 @@ function renderCalendar (date) {
 					activeDate = i;
 					renderFilmCards();
 				}
-
-				console.log(chosenDate)
 			})
 
 		}
 		calendarItems[0].insertAdjacentHTML('beforeend', '<p href="" class="date__link date__switch"><</p>');
 		calendarItems[0].addEventListener('click', e => {
-			console.log(dateItem)
 			dateItem.setDate(date.getDate() - 7);
-			console.log(dateItem)
 			isCalendarSwitched = 0;
 			e.target.innerHTML = '';
 			calendarItems[calendarItems.length - 1].innerHTML = '';
@@ -250,8 +238,6 @@ function renderFilmSeances (film, filmSeances, hallsInfo) {
 					calendarWrapper.classList.add('hidden');
 					loginButton.classList.add('hidden');
 					seanceSeats.classList.remove('hidden');
-
-					console.log(chosenDate);
 					renderSeanceConfig(element, film, hallsInfo);
 				})
 			}
@@ -279,9 +265,6 @@ function renderSeanceConfig (seance, film, hallsInfo) {
 	    .then( response => response.json())
 	    .then( data => {
 	    	hallGrid.innerHTML = ''
-	    	console.log( data.result );
-	    	console.log(seance);
-	    	console.log(film);
 	    	const currentHall = hallsInfo.find((e) => e.id === seance.seance_hallid);
 	    	const hallTitle = currentHall.hall_name;
 	    	const hallConfig = data.result;
@@ -313,7 +296,6 @@ function renderSeanceConfig (seance, film, hallsInfo) {
 						hallGridCell.classList.add('hall__seat-occupied')
 					};
 					hallGridCell.addEventListener('click', (e) => {
-						console.log(`${rowIndex + 1} x ${placeIndex + 1}`)
 						if ([...hallGridCell.classList].includes('hall__seat-free') && ![...hallGridCell.classList].includes('hall__seat-chosen')) {
 							hallGridCell.classList.add('hall__seat-chosen');
 							chosenSeats.push({
@@ -321,7 +303,6 @@ function renderSeanceConfig (seance, film, hallsInfo) {
 								place: placeIndex + 1,
 								coast: currentHall.hall_price_standart,
 							});
-							console.log(chosenSeats)
 						} else if ([...hallGridCell.classList].includes('hall__seat-vip') && ![...hallGridCell.classList].includes('hall__seat-chosen')) {
 							hallGridCell.classList.add('hall__seat-chosen');
 							chosenSeats.push({
@@ -329,7 +310,6 @@ function renderSeanceConfig (seance, film, hallsInfo) {
 								place: placeIndex + 1,
 								coast: currentHall.hall_price_vip,
 							});
-							console.log(chosenSeats)
 						} else if ([...hallGridCell.classList].includes('hall__seat-chosen')) {
 							hallGridCell.classList.remove('hall__seat-chosen');
 							for (let i = 0; i < chosenSeats.length; i++) {
@@ -340,7 +320,6 @@ function renderSeanceConfig (seance, film, hallsInfo) {
 									break;
 								}
 							}
-							console.log(chosenSeats);
 						}
 					});
 				});
@@ -437,6 +416,4 @@ function renderPayment (seance, date, film, hall, chosenSeats) {
 
 }
 
-
 renderCalendar(today);
-console.log(chosenDate);

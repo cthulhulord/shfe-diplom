@@ -1,8 +1,3 @@
-// fetch( 'https://shfe-diplom.neto-server.ru/alldata' )
-//     .then( response => response.json())
-//     .then( data => console.log( data ));
-
-
 const closePopup = [...document.querySelectorAll('.popup-close')];
 const cancelPopup = [...document.querySelectorAll('.popup-cancel')]
 
@@ -63,7 +58,6 @@ function deleteHall (buttonArray) {
 				e.preventDefault();
 				const hallId = element.closest('.admin-halls__list-item').id.slice(4);
 
-				// console.log(hallId);
 				fetch( `https://shfe-diplom.neto-server.ru/hall/${hallId}`, {
 	    			method: 'DELETE',
 				})
@@ -86,7 +80,6 @@ function getHallSeats (hall) {
 			hallConfig = configActiveHall.hall_config;
 			inputRows.value = hallConfig.length;
 			inputSeats.value = hallConfig[0].length;
-			// console.log(hallConfig);
 			renderHallSeats();
 			hallInput();
 		})
@@ -97,12 +90,10 @@ function hallInput () {
 		if (!/\D/.test(inputRows.value)) {
 			if (inputSeats.value) {
 				hallConfig = [];
-				// console.log(hallConfig);
 				for (let i = 0; i < inputRows.value; i++) {
 					hallConfig.push([]);
 					for (let x = 0; x < inputSeats.value; x++) {
 						hallConfig[i].push('standart');
-						// console.log(hallConfig);
 					}
 				}
 				setTimeout(() => {
@@ -113,7 +104,6 @@ function hallInput () {
 	});
 
 	inputSeats.addEventListener('input', (e) => {
-		// console.log(hallConfig);
 		if (!/\D/.test(inputSeats.value)) {
 			if (inputRows.value) {
 				hallConfig = []
@@ -121,7 +111,6 @@ function hallInput () {
 					hallConfig.push([]);
 					for (let x = 0; x < inputSeats.value; x++) {
 						hallConfig[i].push('standart');
-						// console.log(hallConfig);
 					}
 				}
 				setTimeout(() => {
@@ -134,8 +123,6 @@ function hallInput () {
 }
 
 function saveHallSeats () {
-	// const configConfirm = document.getElementById('create-config');
-	// const configCancel = document.getElementById('cancel-config');
 	const placeCount = hallConfig[0].length;
 	const rowCount = hallConfig.length;
 	const params = new FormData();
@@ -152,7 +139,6 @@ function saveHallSeats () {
 }
 
 function renderHallSeats () {
-	// console.log('hello');
 	const hallGrid = document.querySelector('.seat-scheme__grid');
 	const hallGridCell = document.createElement('div');
 
@@ -173,7 +159,6 @@ function renderHallSeats () {
 				hallGridCell.classList.add('seat-scheme__item_vip')
 			};
 			hallGridCell.addEventListener('click', (e) => {
-				// console.log(hallGridCell.classList)
 				if ([...hallGridCell.classList].includes('seat-scheme__item_regular')) {
 					hallGridCell.classList.remove('seat-scheme__item_regular');
 					hallGridCell.classList.add('seat-scheme__item_vip');
@@ -195,7 +180,6 @@ function renderHallSwitch (hallSwitchContainer) {
 		.then((response) => response.json())
 		.then((data) => {
 			const hallItems = data.result.halls;
-			// console.log(hallItems);
 			hallSwitchContainer.innerHTML = '';
 			hallItems.forEach((element) => {
 				hallSwitchContainer.insertAdjacentHTML('beforeend', `<button class="hall-switch__button">${element.hall_name}</button>`
@@ -208,7 +192,6 @@ function renderHallSwitch (hallSwitchContainer) {
 			let activeHallIndex = 0;
 			let activeHallName = hallItemsRendered[0].textContent;
 			let activeHallId = hallItems[0].id;
-			// console.log(activeHallId);
 			if (hallItemsRendered[0].closest('.hall-switch__buttons_configuration')) {
 				getHallSeats(activeHallId)
 			} else if (hallItemsRendered[0].closest('.hall-switch__buttons_prices')) {
@@ -225,7 +208,6 @@ function renderHallSwitch (hallSwitchContainer) {
 						activeHallIndex = index;
 						activeHallName = element.textContent;
 						activeHallId = hallItems.find(x => x.hall_name === activeHallName).id;
-						// console.log(activeHallId);
 						if (element.closest('.hall-switch__buttons_configuration')) {
 							inputRows.value = '';
 							inputSeats.value = '';
@@ -274,9 +256,6 @@ launchButton.addEventListener('click', e => {
 	launchInfo(launchActiveHall.id);
 });
 
-// console.log(inputPriceStandart)
-// console.log(inputPriceVip)
-
 function openHall (hall) {
 	const params = new FormData()
 	if (isHallOpen === 0) {
@@ -293,9 +272,6 @@ function openHall (hall) {
 	    .then( data => {
 	    	console.log( data );
 	    });
-
-    // console.log(launchActiveHall);
-    // console.log(hall);
 }
 
 function launchInfo (hall) {
@@ -319,7 +295,6 @@ function saveHallPrices () {
 	const params = new FormData();
 	params.set('priceStandart', priceStandart);
 	params.set('priceVip', priceVip);
-	// console.log(params)
 
 	fetch(`https://shfe-diplom.neto-server.ru/price/${pricesActiveHall.id}`, {
 			method: 'POST',
@@ -346,18 +321,15 @@ function priceInput () {
 function renderHallPrices () {
 	inputPriceStandart.value = hallPrices[0];
 	inputPriceVip.value = hallPrices[1];
-	// console.log(pricesActiveHall)
 }
 
 function getHallPrices (hall) {
 	fetch( 'https://shfe-diplom.neto-server.ru/alldata' )
 		.then((response) => response.json())
 		.then((data) => {
-			// console.log(data);
 			const hallItems = data.result.halls;
 			pricesActiveHall = hallItems.find(x => x.id === hall);
 			hallPrices = [pricesActiveHall.hall_price_standart, pricesActiveHall.hall_price_vip];
-			// console.log(hallPrices);
 			renderHallPrices();
 			priceInput();
 		})
@@ -423,7 +395,6 @@ function renderFilmsList () {
 		.then( (response) => response.json())
 		.then( (data) => {
 			filmsList.innerHTML = "";
-			// console.log(data);
 			let filmsInfo = data.result.films;
 			filmsInfo.forEach((element) => {
 				filmsList.insertAdjacentHTML('beforeend', 
@@ -458,7 +429,6 @@ function renderFilmsList () {
 			const deleteFilmButton = [...document.querySelectorAll('.admin-delete-button_sessions')];
 			const filmCards = [...document.querySelectorAll('.admin-sessions__movie-list-item')];
 			const hallTimelines = [...sessionsList.children];
-			// console.log(hallTimelines);
 
 			let dragged;
 
@@ -499,7 +469,6 @@ function renderFilmsList () {
 
 			let seancesInfo = data.result.seances;
 			seancesInfo.forEach((element, index) => {
-				// console.log(element.seance_hallid)
 				const seanceHall = hallTimelines.find((x) => x.id.slice(12) == element.seance_hallid);
 				const seanceFilm = filmCards.find((x) => x.id.slice(4) == element.seance_filmid);
 				const seanceTime = element.seance_time.replace(':', '');
@@ -514,21 +483,13 @@ function renderFilmsList () {
 				seanceItem.setAttribute('draggable', 'true');
 
 				const fullTimeline = Math.floor(sessionsList.getBoundingClientRect().width);
-				// const startHour = +seanceTime.slice(-2);
-				console.log(seanceTime)
-				console.log(seanceTime.slice(0, -2));
 				const seanceWidth = (fullTimeline * filmsInfo.find((x) => x.id === element.seance_filmid).film_duration) / 948;
-				// console.log(seanceWidth);
 				seanceItem.style.width = seanceWidth + 'px';
 				seanceItem.style.left = ((+seanceTime.slice(0, -2) - 10) * (fullTimeline / 30)) + 'px';
 
 				const bgColor = window.getComputedStyle(seanceFilm).backgroundColor;
 				seanceItem.style.background = bgColor;
 			})
-
-			// function compare (a,b) {
-			// 	a.dataset.seanceTime - 
-			// }
 
 			hallTimelines.forEach((element) => {
 				const hallsTimeline = [...element.children.item(1).children];
@@ -591,7 +552,6 @@ function deleteFilm (buttonArray) {
 				e.preventDefault();
 				const filmId = element.closest('.admin-sessions__movie-list-item').id.slice(4);
 
-				// console.log(filmId);
 				fetch( `https://shfe-diplom.neto-server.ru/film/${filmId}`, {
 	    			method: 'DELETE',
 				})
@@ -653,20 +613,6 @@ submitSessionButton.addEventListener('click', (e) => {
 	    	renderFilmsList();
 	    })
 })
-
-
-
-
-// function renderSessionHalls () {
-// 	fetch('https://shfe-diplom.neto-server.ru/alldata')
-// 		.then( (response) => response.json())
-// 		.then( (data) => {
-			
-// 		})
-// }
-
-// renderSessionHalls();
-
 
 
 
