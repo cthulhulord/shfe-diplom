@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body class="body-admin">
+	<div class="content-wrapper-admin">
+		<header class="admin-header">
+			<div class="admin-header__logo">
+				<h1 class="admin-header__title header__logo">Идём<span class="header__logo-thin">в</span>кино</h1>
+				<h2 class="admin-header__subtitle">Администраторррская</h2>
+			</div>
+		</header>
+		<div class="popup-wrapper hidden" id="add-movie">
+			<div class="popup-movie popup">
+				<header class="popup-header">
+					<h3 class="popup-title">Добавление фильма</h3>
+					<button class="popup-close"></button>
+				</header>
+				<form class="popup-movie-form popup-form" id="popup-movie-form">
+					<label for="movie-title" class="popup-label popup-label-title">Название фильма</label>
+					<input type="text" class="popup-input popup-input-title" id="movie-title" placeholder="Например, «Гражданин Кейн»" name="filmName">
+					<label for="movie-length" class="popup-label popup-label-length">Продолжительность фильма (мин.)</label>
+					<input type="text" class="popup-input popup-input-length" id="movie-length" name="filmDuration">
+					<label for="movie-description" class="popup-label popup-label-description">Описание фильма</label>
+					<textarea class="popup-input popup-input-description" id="movie-description" name="filmDescription"></textarea>
+					<label for="movie-country" class="popup-label popup-label-country">Страна</label>
+					<input type="text" class="popup-input popup-input-country" id="movie-country" name="filmOrigin">
+					<div class="submit__wrapper_popup submit__wrapper">
+						<button class="submit__button submit__button_confirm button" id="create-film">Добавить фильм</button>
+						<label for="upload-poster" class="submit__button submit__button_confirm button">
+							Загрузить постер
+							<input type="file" class="submit__button submit__button_upload button" id="upload-poster" accept=".png" name="filePoster">
+						</label>
+						<button class="submit__button submit__button_cancel popup-cancel button">Отменить</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="popup-wrapper hidden" id="add-session">
+			<div class="popup-session popup">
+				<header class="popup-header">
+					<h3 class="popup-title">Добавление сеанса</h3>
+					<button class="popup-close"></button>
+				</header>
+				<form class="popup-session-form popup-form" id="popup-session-form">
+					<label for="hall-select" class="popup-label popup-label-title">Название зала</label>
+					<select name="seanceHallid" id="hall-select" class="popup-input popup-input-select">
+						<!-- <option value="" class="popup-option popup-option-hall">Название зала</option>
+						<option value="Зал 1" class="popup-option popup-option-hall">Зал 1</option>
+						<option value="Зал 2" class="popup-option popup-option-hall">Зал 2</option> -->
+					</select>
+					<label for="movie-select" class="popup-label popup-label-title">Название фильма</label>
+					<select name="seanceFilmid" id="movie-select" class="popup-input popup-input-select">
+						<!-- <option value="" class="popup-option popup-option-hall">Название фильма</option>
+						<option value="Зал 1" class="popup-option popup-option-hall">Звёздные войны XXIII: Атака клонированных клонов</option>
+						<option value="Зал 2" class="popup-option popup-option-hall">Звёздные войны XXIII: Атака клонированных клонов</option> -->
+					</select>
+					<label for="time-select" class="popup-label popup-label-length">Время начала</label>
+					<input name="seanceTime" type="time" class="popup-input popup-input-time" id="time-select" value="10:00" min="10:00" max="23:59" required>
+					<div class="submit__wrapper_popup submit__wrapper">
+						<button class="submit__button submit__button_confirm button" id="create-session">Добавить фильм</button>
+						<button class="submit__button submit__button_cancel button popup-cancel">Отменить</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="popup-wrapper hidden" id="add-hall">
+			<div class="popup-hall popup">
+				<header class="popup-header">
+					<h3 class="popup-title">Добавление зала</h3>
+					<button class="popup-close"></button>
+				</header>
+				<form class="popup-hall-form popup-form" id="popup-hall-form">
+					<label for="hall-name" class="popup-label popup-label-title">Название зала</label>
+					<input type="text" class="popup-input popup-input-title" id="hall-name" placeholder="Например, «Зал 1»">
+					<div class="submit__wrapper_popup submit__wrapper">
+						<button class="submit__button submit__button_confirm button" id="create-hall">Добавить зал</button>
+						<button class="submit__button submit__button_cancel popup-cancel button" id="cancel-hall">Отменить</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<main class="admin-index">
+			<section class="admin-halls admin-section">
+				<header class="admin-halls__header admin-section__header">
+					<h3 class="admin-halls__title admin-section__title">Управление залами</h3>
+				</header>
+				<div class="admin-halls__body admin-section__body">
+					<div class="admin-halls__wrapper">
+						<p class="admin-section__text">Доступные залы:</p>
+						<button class="admin-halls__button button" id="add-hall-button">Создать зал</button>
+					</div>
+				</div>
+			</section>
+			<section class="admin-configuration admin-section">
+				<header class="admin-configuration__header admin-section__header">
+					<h3 class="admin-configuration__title admin-section__title">Конфигурация залов</h3>
+				</header>
+				<div class="admin-configuration__body admin-section__body">
+					<div class="hall-switch">
+						<p class="admin-section__text">Выберите зал для конфигурации:</p>
+						<div class="hall-switch__buttons hall-switch__buttons_configuration">
+							<!-- <button class="hall-switch__button hall-switch__button_active">Зал 1</button>
+							<button class="hall-switch__button">Зал 2</button> -->
+						</div>
+					</div>
+					<div class="seat-count">
+						<p class="admin-section__text">Укажите количество рядов и максимальное количество кресел в ряду:</p>
+						<div class="input-container">
+							<div class="input-wrapper">
+								<label for="rows" class="seat-count__label admin__label">Рядов, шт</label>
+								<input type="text" class="seat-count__input admin__input" id="rows" placeholder="10">
+							</div>
+							<span class="seat-count__breaker">x</span>
+							<div class="input-wrapper">
+								<label for="columns" class="seat-count__label admin__label">Мест, шт</label>
+								<input type="text" class="seat-count__input admin__input" id="columns" placeholder="8">							
+							</div>
+						</div>
+					</div>
+					<div class="seat-scheme">
+						<p class="admin-section__text">Теперь вы можете указать типы кресел на схеме зала:</p>
+						<div class="seat-scheme__legend">
+							<div class="legend__item">
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<p class="legend__text">— обычные кресла</p>				
+							</div>
+							<div class="legend__item">
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<p class="legend__text">— VIP кресла</p>				
+							</div>
+							<div class="legend__item">
+								<div class="seat-scheme__item"></div>
+								<p class="legend__text">— заблокированные (нет кресла)</p>				
+							</div>
+							<div class="legend__item">
+								<p class="legend__text">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
+							</div>
+						</div>
+						<div class="seat-scheme__grid-wrapper">
+							<div class="seat-scheme__grid">
+								<!-- 1st row -->
+								<!-- <div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item"></div> -->
+								<!-- 2nd row -->
+								<!-- <div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item"></div> -->
+								<!-- 3rd row -->
+								<!-- <div class="seat-scheme__item"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item"></div> -->
+								<!-- 4th row -->
+								<!-- <div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item"></div> -->
+								<!-- 5th row -->
+								<!-- <div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item"></div> -->
+								<!-- 6th row -->
+								<!-- <div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item"></div> -->
+								<!-- 7th row -->
+								<!-- <div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item"></div> -->
+								<!-- 8th row -->
+								<!-- <div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item"></div> -->
+								<!-- 9th row -->
+								<!-- <div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div> -->
+								<!-- 10th row -->
+								<!-- <div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div> -->
+							</div>
+						</div>
+					</div>
+					<div class="submit__wrapper_configuration submit__wrapper">
+						<button class="submit__button submit__button_cancel button" id="cancel-config">Отмена</button>
+						<button class="submit__button submit__button_confirm button" id="create-config">Сохранить</button>
+					</div>
+				</div>
+			</section>
+			<section class="admin-prices admin-section">
+				<header class="admin-prices__header admin-section__header">
+					<h3 class="admin-prices__title admin-section__title">Конфигурация цен</h3>
+				</header>
+				<div class="admin-prices__body admin-section__body">
+					<div class="hall-switch">
+						<p class="admin-section__text">Выберите зал для конфигурации:</p>
+						<div class="hall-switch__buttons hall-switch__buttons_prices">
+							<!-- <button class="hall-switch__button">Зал 1</button>
+							<button class="hall-switch__button hall-switch__button_active">Зал 2</button> -->
+						</div>
+					</div>
+					<div class="admin-prices__form">
+						<p class="admin-section__text">Установите цены для типов кресел:</p>
+						<div class="admin-prices__input-container">
+							<label for="price-regular" class="admin-prices__label admin__label">Цена, рублей</label>
+							<div class="admin-prices__input-wrapper">
+								<input type="text" class="admin-prices__input admin-prices__input_regular admin__input" id="price-regular" placeholder="0">
+								<p class="legend__text">за</p>
+								<div class="seat-scheme__item seat-scheme__item_regular"></div>
+								<p class="legend__text">обычные кресла</p>
+							</div>
+						</div>
+						<div class="admin-prices__input-container">
+							<label for="price-vip" class="admin-prices__label admin__label">Цена, рублей</label>
+							<div class="admin-prices__input-wrapper">
+								<input type="text" class="admin-prices__input admin-prices__input_vip admin__input" id="price-vip" placeholder="0">
+								<p class="legend__text">за</p>
+								<div class="seat-scheme__item seat-scheme__item_vip"></div>
+								<p class="legend__text">VIP кресла</p>
+							</div>
+						</div>
+					</div>
+					<div class="submit__wrapper_prices submit__wrapper">
+						<button class="submit__button submit__button_cancel button" id="cancel-prices">Отмена</button>
+						<button class="submit__button submit__button_confirm button" id="create-prices">Сохранить</button>
+					</div>
+				</div>
+			</section>
+			<section class="admin-sessions admin-section">
+				<header class="admin-sessions__header admin-section__header">
+					<h3 class="admin-sessions__title admin-section__title">Сетка сеансов</h3>
+				</header>
+				<div class="admin-sessions__body admin-section__body">
+					<button class="admin-sessions__button button" id="add-movie-button">Добавить фильм</button>
+					<ul class="admin-sessions__movie-list">
+						<li class="admin-sessions__movie-list-item admin-sessions__movie-list-item_yellow">
+							<img src="resources/images/movie-poster1.jpg" alt="" class="admin-sessions__movie-image">
+							<div class="admin-sessions__movie-info">
+								<p class="admin-sessions__movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
+								<p class="admin-sessions__movie-length">130 минут</p>
+							</div>
+							<button class="admin-delete-button admin-delete-button_sessions"></button>
+						</li>
+						<li class="admin-sessions__movie-list-item admin-sessions__movie-list-item_green">
+							<img src="resources/images/movie-poster1.jpg" alt="" class="admin-sessions__movie-image">
+							<div class="admin-sessions__movie-info">
+								<p class="admin-sessions__movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
+								<p class="admin-sessions__movie-length">130 минут</p>
+							</div>
+							<button class="admin-delete-button admin-delete-button_sessions"></button>
+						</li>
+						<li class="admin-sessions__movie-list-item admin-sessions__movie-list-item_turquoise">
+							<img src="resources/images/movie-poster1.jpg" alt="" class="admin-sessions__movie-image">
+							<div class="admin-sessions__movie-info">
+								<p class="admin-sessions__movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
+								<p class="admin-sessions__movie-length">130 минут</p>
+							</div>
+							<button class="admin-delete-button admin-delete-button_sessions"></button>
+						</li>
+						<li class="admin-sessions__movie-list-item admin-sessions__movie-list-item_blue">
+							<img src="resources/images/movie-poster1.jpg" alt="" class="admin-sessions__movie-image">
+							<div class="admin-sessions__movie-info">
+								<p class="admin-sessions__movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
+								<p class="admin-sessions__movie-length">130 минут</p>
+							</div>
+							<button class="admin-delete-button admin-delete-button_sessions"></button>
+						</li>
+						<li class="admin-sessions__movie-list-item admin-sessions__movie-list-item_purple">
+							<img src="resources/images/movie-poster1.jpg" alt="" class="admin-sessions__movie-image">
+							<div class="admin-sessions__movie-info">
+								<p class="admin-sessions__movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
+								<p class="admin-sessions__movie-length">130 минут</p>
+							</div>
+							<button class="admin-delete-button admin-delete-button_sessions"></button>
+						</li>
+					</ul>
+					<ol class="admin-sessions__halls-list">
+						<li class="admin-sessions__halls-list-item">
+							<div class="admin-sessions__session-delete"></div>
+							<h4 class="admin-sessions__halls-title">Зал 1</h4>
+							<div class="admin-sessions__halls-timeline">
+								<div class="admin-sessions__session">
+									<p class="admin-sessions__session-title">Миссия выполнима</p>
+									<p class="admin-sessions__session-time">00:00</p>
+								</div>
+							</div>
+						</li>
+						<li class="admin-sessions__halls-list-item">
+							<h4 class="admin-sessions__halls-title">Зал 1</h4>
+							<div class="admin-sessions__halls-timeline">
+								
+							</div>
+						</li>
+					</ol>
+					<div class="submit__wrapper_sessions submit__wrapper">
+						<button class="submit__button submit__button_cancel button">Отмена</button>
+						<button class="submit__button submit__button_confirm button">Сохранить</button>
+					</div>
+				</div>
+			</section>
+			<section class="admin-launch admin-section">
+				<header class="admin-launch__header admin-section__header">
+					<h3 class="admin-launch__title admin-section__title">Открыть продажи</h3>
+				</header>
+				<div class="admin-launch__body admin-section__body">
+					<div class="hall-switch">
+						<p class="admin-section__text">Выбирите залл для открытия/закрытия продаж:</p>
+						<div class="hall-switch__buttons hall-switch__buttons_launch">
+							<!-- <button class="hall-switch__button hall-switch__button_active">Зал 1</button>
+							<button class="hall-switch__button">Зал 2</button> -->
+						</div>
+					</div>
+					<p class="admin-section__text admin-launch__text">Всё готово к открытию</p>
+					<button class="admin-launch__button button" id="launch-button">Открыть продажу билетов</button>
+				</div>
+			</section>
+		</main>
+	</div>
+	<script async src="admin.js"></script>
+</body>
+</html>

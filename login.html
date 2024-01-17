@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+	<script async src="login.js"></script>
+</head>
+<body class="body-admin">
+	<div class="content-wrapper-admin">
+		<header class="admin-header">
+			<div class="admin-header__logo">
+				<h1 class="admin-header__title header__logo">Идём<span class="header__logo-thin">в</span>кино</h1>
+				<h2 class="admin-header__subtitle">Администраторррская</h2>
+			</div>
+		</header>
+		<div class="login">
+			<header class="login__header">
+				<h3 class="login__title">Авторизация</h3>
+			</header>
+			<form id="login" class="login__form">
+				<label for="email" class="email__label login__label">E-mail</label>
+				<input type="email" class="email__input login__input" id="email" name="login" placeholder="example@domain.xyz">
+				<label for="password" class="password__label login__label">Пароль</label>
+				<input type="password" class="password__input login__input" id="password" name="password">
+				<button class="login__button button" id="signin" type="submit">Авторизоваться</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
