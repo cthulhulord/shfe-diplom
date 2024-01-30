@@ -219,6 +219,7 @@ function renderFilmSeances (film, filmSeances) {
 					window.localStorage.setItem('seanceHallId', element.seance_hallid);
 					window.localStorage.setItem('seanceTime', element.seance_time);
 					window.localStorage.setItem('filmTitle', film.film_name);
+					window.localStorage.setItem('chosenDate', chosenDate);
 					console.log(window.localStorage.getItem('seanceId'))
 					window.open('hall.html', '_self');
 				})
