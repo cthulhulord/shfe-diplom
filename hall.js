@@ -1,3 +1,5 @@
+let data = new allData;
+
 const hallConfig = document.querySelector('.client__hall');
 const hallSeanceInfo = document.querySelector('.session__info');
 const hallGrid = document.querySelector('.hall__grid');
