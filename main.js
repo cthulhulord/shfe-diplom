@@ -190,6 +190,10 @@ async function renderFilmCards () {
 			}
 		})
 
+		if ([...filmArticle.children.item(1).children].length == 0) {
+			filmArticle.classList.add('hidden')
+		}
+
 	renderFilmSeances(element, filmSeances);
 	});
 }
