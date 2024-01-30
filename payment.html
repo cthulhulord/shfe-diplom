@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Билет</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="icon" href="resources/images/favicon-client.png">
+	<script src="QRCreator.js" defer></script>
+	<script async src="xhr.js"></script>
+	<script async src="payment.js"></script>
+</head>
+<body class="body-client">
+	<div class="content-wrapper">
+		<header class="header">
+			<h1 class="header__logo">Идём<span class="header__logo-thin">в</span>кино</h1>
+		</header>
+		<main class="client__payment hidden">
+			<header class="subheader">
+				<h2 class="subheader__title">Вы выбрали билеты:</h2>
+			</header>
+			<div class="ticket-wrapper">
+				<div class="ticket-info">
+				</div>
+				<button class="payment-button button" id="code-button">Получить код бронирования</button>
+				<div class="qr-wrapper" id="qr1"></div>
+				<div class="ticket-hint">
+					<p class="ticket-hint__line">После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.</p>
+					<p class="ticket-hint__line">Приятного просмотра!</p>
+				</div>
+			</div>
+		</main>
+	</div>
+</body>
+</html>

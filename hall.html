@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Выбор места</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="icon" href="resources/images/favicon-client.png">
+	<script src="QRCreator.js" defer></script>
+	<script async src="xhr.js"></script>
+	<script async src="hall.js"></script>
+</head>
+<body class="body-client">
+	<header class="header">
+			<h1 class="header__logo">Идём<span class="header__logo-thin">в</span>кино</h1>
+	</header>
+	<main class="client__hall">
+			<div class="session__info-wrapper">
+				<div class="session__info">
+				</div>
+				<div class="zoom-hint">
+					<img src="resources/images/hint.png" alt="" class="hint-icon">
+					<p class="hint-text">Тапните дважды, чтобы увеличить</p>					
+				</div>
+			</div>
+			<div class="hall">
+				<div class="hall__grid">
+				</div>
+				<div class="hall__legend">
+					<div class="legend__wrapper legend__wrapper-left">
+						<div class="legend__item">
+							<div class="hall__seat hall__seat-free"></div>
+							<p class="legend__label" id="legend-standart"></p>
+						</div>
+						<div class="legend__item">
+							<div class="hall__seat hall__seat-vip"></div>
+							<p class="legend__label" id="legend-vip"></p>
+						</div>
+					</div>
+					<div class="legend__wrapper legend__wrapper-right">
+						<div class="legend__item">
+							<div class="hall__seat hall__seat-occupied"></div>
+							<p class="legend__label">Занято</p>
+						</div>
+						<div class="legend__item">
+							<div class="hall__seat hall__seat-chosen"></div>
+							<p class="legend__label">Выбрано</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="booking">
+				<button class="booking__button button">Забронировать</button>
+			</div>
+		</main>
+</body>
+</html>
