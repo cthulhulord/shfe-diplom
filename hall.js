@@ -20,7 +20,7 @@ async function renderSeanceConfig () {
 	hallGrid.innerHTML = "";
 
 	const hallsInfo = data.info.halls;
-	const currentHall = hallsInfo.find((e) => e.id === seanceHallId);
+	const currentHall = hallsInfo.find((e) => e.id == seanceHallId);
 	const hallTitle = currentHall.hall_name;
 	const hallConfig = data.hallConfig;
 	let chosenSeats = [];
