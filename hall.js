@@ -10,11 +10,6 @@ const seanceHallId = window.localStorage.getItem('seanceHallId');
 const seanceTime = window.localStorage.getItem('seanceTime');
 const filmTitle = window.localStorage.getItem('filmTitle');
 
-
-console.log(currentSeance);
-console.log(currentFilm);
-console.log(curHall);
-
 async function renderSeanceConfig () {
 	await data.getData();
 	await data.getSeanceConfig(seanceId);
