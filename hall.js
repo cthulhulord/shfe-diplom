@@ -11,6 +11,7 @@ const seanceId = window.localStorage.getItem('seanceId');
 const seanceHallId = window.localStorage.getItem('seanceHallId');
 const seanceTime = window.localStorage.getItem('seanceTime');
 const filmTitle = window.localStorage.getItem('filmTitle');
+const chosenDate = window.localStorage.getItem('chosenDate');
 
 async function renderSeanceConfig () {
 	await data.getData();

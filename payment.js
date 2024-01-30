@@ -7,6 +7,10 @@ const qrWrapper = document.getElementById('qr1');
 
 const hallTitle = window.localStorage.getItem('hallTitle');
 const chosenSeats = JSON.parse(window.localStorage.getItem('chosenSeats'));
+const filmTitle = window.localStorage.getItem('filmTitle');
+const seanceId = window.localStorage.getItem('seanceId');
+const seanceTime = window.localStorage.getItem('seanceTime');
+const chosenDate = window.localStorage.getItem('chosenDate');
 
 function renderPayment () {
 	let totalPrice = 0;
