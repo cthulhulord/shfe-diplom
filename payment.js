@@ -1,3 +1,5 @@
+let data = new allData;
+
 const ticketTitle = document.querySelector('.subheader__title');
 const ticketWrapper = document.querySelector('.ticket-wrapper');
 const ticketInfo = document.querySelector('.ticket-info');
