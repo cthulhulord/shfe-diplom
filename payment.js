@@ -14,9 +14,10 @@ const seanceId = window.localStorage.getItem('seanceId');
 const seanceTime = window.localStorage.getItem('seanceTime');
 const chosenDate = window.localStorage.getItem('chosenDate');
 
+let totalPrice = 0;
+let placeArray = [];
+
 function renderPayment () {
-	let totalPrice = 0;
-	let placeArray = []
 
 	chosenSeats.forEach(element => {
 		totalPrice += element.coast;
