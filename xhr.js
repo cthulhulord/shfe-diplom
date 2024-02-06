@@ -24,8 +24,8 @@ class allData {
 			.then(response => response.json())
 			.then(data => {
 				console.log(data)
-				this.ticketSuccess = data.success
-				console.log(this.ticketSuccess)
+				renderTicket();
+
 			})
 	}
 

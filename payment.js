@@ -43,33 +43,33 @@ function renderPayment () {
 		console.log(params.get('ticketDate'));
 		console.log(params.get('tickets'));
 
-		data.setTicket(params)
-
-		if (data.ticketSuccess) {
-			getCodeButton.classList.add('hidden');
-			ticketInfo.children.item(4).remove();
-
-			ticketHint.children.item(0).textContent = 'Покажите QR-код нашему контроллеру для подтверждения бронирования.';
-
-
-			const qrcode = QRCreator(`Дата: ${chosenDate}, Время:${seanceTime}, Название фильма:${filmTitle}, Зал:${hallTitle}, ${placeArray.join(', ')}, Стоимость:${totalPrice}. Билет действителен строго на свой сеанс`,
-				{ mode: 4,
-				  eccl: 0,
-				  mask: -1,
-				  image: 'png',
-				  modsize: -1,
-				  margin: 0
-				});
-
-			const content = (qrcode) =>{
-			  return qrcode.error ?
-			    `недопустимые исходные данные ${qrcode.error}`:
-			     qrcode.result;
-			};
-
-			qrWrapper.appendChild(content(qrcode));
-		}
+		data.setTicket(params);
 	})
+}
+
+function renderTicket() {
+	getCodeButton.classList.add('hidden');
+	ticketInfo.children.item(4).remove();
+
+	ticketHint.children.item(0).textContent = 'Покажите QR-код нашему контроллеру для подтверждения бронирования.';
+
+
+	const qrcode = QRCreator(`Дата: ${chosenDate}, Время:${seanceTime}, Название фильма:${filmTitle}, Зал:${hallTitle}, ${placeArray.join(', ')}, Стоимость:${totalPrice}. Билет действителен строго на свой сеанс`,
+		{ mode: 4,
+		  eccl: 0,
+		  mask: -1,
+		  image: 'png',
+		  modsize: -1,
+		  margin: 0
+		});
+
+	const content = (qrcode) =>{
+	  return qrcode.error ?
+	    `недопустимые исходные данные ${qrcode.error}`:
+	     qrcode.result;
+	};
+
+	qrWrapper.appendChild(content(qrcode));
 }
 
 renderPayment();
