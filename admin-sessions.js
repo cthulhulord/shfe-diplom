@@ -68,11 +68,13 @@ function renderSessionsList (halls, seances) {
 				const seanceTime = element.seance_time.replace(':', '');
 				const seanceItem = document.createElement('div');
 				seanceHall.children.item(1).appendChild(seanceItem);
-				seanceItem.classList.add('admin-sessions__session');
+				seanceItem.classList.add('admin-sessions__session-wrapper');
 				seanceItem.id = element.id
 				seanceItem.setAttribute('data-time',seanceTime)
 				seanceItem.insertAdjacentHTML('beforeend', 
-					`<p class="admin-sessions__session-title">${filmItems.find((x) => x.id === element.seance_filmid).film_name}</p>
+					`<div class="admin-sessions__session">
+						<p class="admin-sessions__session-title">${filmItems.find((x) => x.id === element.seance_filmid).film_name}</p>
+					</div>
 					<p class="admin-sessions__session-time">${element.seance_time}</p>`)
 				seanceItem.setAttribute('draggable', 'true');
 

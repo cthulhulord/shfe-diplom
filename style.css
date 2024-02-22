@@ -1015,9 +1015,6 @@ button, input, textarea, select {
 	margin: 0 auto;
 	display: grid;
 
-/*	grid-template-rows: repeat(auto-fill, 26px);
-	grid-template-columns: repeat(auto-fill, 26px);*/
-
 	gap: 10px;
 }
 
@@ -1212,14 +1209,13 @@ button, input, textarea, select {
 
 	display: flex;
 	flex-direction: row;
-/*	justify-content: space-between;*/
 
 	padding: 10px 0;
 
 	position: relative;
 }
 
-.admin-sessions__session {
+.admin-sessions__session-wrapper {
 	height: 35px;
 	padding: 10px;
 	border: 1px solid rgba(0, 0, 0, 0.3);
@@ -1231,13 +1227,17 @@ button, input, textarea, select {
 	cursor: pointer;
 }
 
+.admin-sessions__session {
+	overflow: hidden;
+	height: 100%;
+}
+
 .admin-sessions__session-delete {
 	height: 20px;
 	width: 20px;
 	background-image: url(resources/images/bin.png);
 	background-size: contain;
 	position: absolute;
-/*	background-color: red;*/
 
 	left: -25px;
 	top: 40px;
@@ -1268,10 +1268,6 @@ button, input, textarea, select {
 	position: absolute;
 	bottom: 15px;
 	left: 15px;
-}
-
-.admin-launch__body {
-/*	align-items: center;*/
 }
 
 .hall-switch__buttons_launch {
