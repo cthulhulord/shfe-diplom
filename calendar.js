@@ -1,124 +1,115 @@
 const calendarWrapper = document.querySelector('.nav');
 const calendar = document.querySelector('.nav__list');
-const calendarItems = [...document.querySelectorAll('.nav__item')];
 const today = new Date();
+const dayButtonsCount = 6;
 
 let isCalendarSwitched = 0;
 let todayDate = new Date(today);
 let	chosenDate = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
 const todayDateString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
-(function() {
-    const days = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+let dateItem = new Date(todayDate);
 
-    Date.prototype.getDayName = function() {
-        return days[ this.getDay() ];
-    };
-})();
+function getDayName(date) {
+	const days = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+	return days[date.getDay()];
+}
 
 function renderCalendar (date) {
+
+	calendar.innerHTML = '';
+
+	for (let i = 0; i < dayButtonsCount; i++) {
+		const calendarItem = document.createElement('li');
+		calendarItem.classList.add('nav__item');
+		calendar.appendChild(calendarItem);
+	}
+
+	const calendarItems = [...calendar.children]
+
 	let todayDate = new Date(date)	
-	
-	let dateItem = new Date(todayDate)
 
-	
+	let activeDate = 0;
 
-	calendarItems.forEach(element => {
-			element.classList.remove('nav__item-active');
-			element.classList.remove('nav__item-red');
-		})
+	renderFilmCards();
 
-	if (isCalendarSwitched === 0) {
-		calendarItems[0].classList.add('nav__item-active');
-		let activeDate = 0;
 
-		renderFilmCards();
-		for (let i = 0; i < (calendarItems.length - 1); i++) {
-			calendarItems[i].innerHTML = '';
-			chosenDate = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
+	calendarItems.forEach((element, index) => {
+		element.innerHTML = '';
+		element.classList.remove('nav__item-active');
+		element.classList.remove('nav__item-red');
 
-			const dayName = document.createElement('p');
-			const dayNumber = document.createElement('p');
-			dayName.classList.add('date__day');
-			dayNumber.classList.add('date__number');
-			if (today.getDate() === dateItem.getDate()) {
+		const dayName = document.createElement('p');
+		const dayNumber = document.createElement('p');
+		dayName.classList.add('date__day');
+		dayNumber.classList.add('date__number');
+		dayName.textContent = `${getDayName(dateItem)},`;
+		dayNumber.textContent = dateItem.getDate();
+
+		if (today.getDate() === dateItem.getDate()) {
 				dayName.textContent = `Сегодня`;
-				dayNumber.textContent = `${dateItem.getDayName()},${dateItem.getDate()}`;
+				dayNumber.textContent = `${getDayName(dateItem)},${dateItem.getDate()}`;
 			} else {
-				dayName.textContent = `${dateItem.getDayName()},`;
+				dayName.textContent = `${getDayName(dateItem)},`;
 				dayNumber.textContent = dateItem.getDate();			
 			}
-			if (dateItem.getDay() === 0 || dateItem.getDay() === 6) {
-				calendarItems[i].classList.add('nav__item-red')
-			}
-			calendarItems[i].setAttribute('data-date', `${dateItem.getFullYear()}-${dateItem.getMonth() + 1}-${dateItem.getDate()}`)
-			calendarItems[i].appendChild(dayName);
-			calendarItems[i].appendChild(dayNumber);
-			dateItem.setDate(dateItem.getDate() + 1);
 
-			calendarItems[i].addEventListener('click', e => {
-				if (i !== activeDate) {
-					calendarItems[activeDate].classList.remove('nav__item-active');
-					calendarItems[i].classList.add('nav__item-active');
-					chosenDate = calendarItems[i].dataset.date;
-					activeDate = i;
-					renderFilmCards();
-				}
-			})
+		element.appendChild(dayName);
+		element.appendChild(dayNumber);
 
+		if (dateItem.getDay() === 0 || dateItem.getDay() === 6) {
+			element.classList.add('nav__item-red')
 		}
-		calendarItems[calendarItems.length - 1].insertAdjacentHTML('beforeend', '<p href="" class="date__link date__switch">></p>');
-		calendarItems[calendarItems.length - 1].addEventListener('click', e => {
-			dateItem.setDate(date.getDate() + 6);
+		element.setAttribute('data-date', `${dateItem.getFullYear()}-${dateItem.getMonth() + 1}-${dateItem.getDate()}`)
+		element.addEventListener('click', e => {
+			if (index !== activeDate) {
+				calendarItems[activeDate].classList.remove('nav__item-active');
+				element.classList.add('nav__item-active');
+				chosenDate = element.dataset.date;
+				activeDate = index;
+				renderFilmCards();
+				console.log(chosenDate);
+			}
+		})
+		dateItem.setDate(dateItem.getDate() + 1);	
+	})
+
+	calendarItems[activeDate].classList.add('nav__item-active');
+
+	const calendarSwitch = document.createElement('li');
+	const calendarSwitchText = document.createElement('p')
+	calendarSwitch.classList.add('nav__item');
+	calendarSwitchText.classList.add('date__link', 'date__switch');
+	calendarSwitch.appendChild(calendarSwitchText);
+
+	if (isCalendarSwitched === 0) {
+		chosenDate = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
+
+		calendar.appendChild(calendarSwitch)
+		calendarSwitchText.textContent = '>';
+		calendarSwitch.addEventListener('click', e => {
+			dateItem.setDate(dateItem.getDate());
 			isCalendarSwitched = 1;
 			e.target.innerHTML = '';
-			calendarItems[0].innerHTML = '';
 			renderCalendar(dateItem);
 		})
 
 	} else {
-		calendarItems[1].classList.add('nav__item-active');
-		let activeDate = 1;
-		renderFilmCards();
-		for (let i = 1; i < calendarItems.length; i++) {
-			calendarItems[i].innerHTML = '';
+		chosenDate = calendarItems[0].dataset.date;
 
-			const dayName = document.createElement('p');
-			const dayNumber = document.createElement('p');
-			dayName.classList.add('date__day');
-			dayNumber.classList.add('date__number');
-			dayName.textContent = `${dateItem.getDayName()},`;
-			dayNumber.textContent = dateItem.getDate();			
-			
-			if (dateItem.getDay() === 0 || dateItem.getDay() === 6) {
-				calendarItems[i].classList.add('nav__item-red')
-			}
-			calendarItems[i].setAttribute('data-date', `${dateItem.getFullYear()}-${dateItem.getMonth() + 1}-${dateItem.getDate()}`)
-			calendarItems[i].appendChild(dayName);
-			calendarItems[i].appendChild(dayNumber);
-			dateItem.setDate(dateItem.getDate() + 1);
-			chosenDate = calendarItems[1].dataset.date;
-
-			calendarItems[i].addEventListener('click', e => {
-				if (i !== activeDate) {
-					calendarItems[activeDate].classList.remove('nav__item-active');
-					calendarItems[i].classList.add('nav__item-active');
-					chosenDate = calendarItems[i].dataset.date;
-					activeDate = i;
-					renderFilmCards();
-				}
-			})
-
-		}
-		calendarItems[0].insertAdjacentHTML('beforeend', '<p href="" class="date__link date__switch"><</p>');
-		calendarItems[0].addEventListener('click', e => {
-			dateItem.setDate(date.getDate() - 6);
+		calendar.prepend(calendarSwitch)
+		calendarSwitchText.textContent = '<';
+		calendarSwitch.addEventListener('click', e => {
+			dateItem.setDate(date.getDate());
 			isCalendarSwitched = 0;
 			e.target.innerHTML = '';
-			calendarItems[calendarItems.length - 1].innerHTML = '';
+			dateItem = new Date(today);
 			renderCalendar(dateItem);
 		})
 	}
+	console.log(chosenDate);
 }
+
+
 
 renderCalendar(today);

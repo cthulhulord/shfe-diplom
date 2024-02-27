@@ -48,7 +48,7 @@ async function renderFilmCards () {
 		const filmSeances = []
 		const filmHalls = []
 
-		seancesInfo.map((item) => {
+		seancesInfo.forEach((item) => {
     		const seanceFilm = item.seance_filmid;
     		if (seanceFilm === element.id) {
     			filmSeances.push(item);

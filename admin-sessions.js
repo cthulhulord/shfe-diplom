@@ -81,9 +81,11 @@ function renderSessionsList (halls, seances) {
 				// const fullTimeline = Math.floor(sessionsList.getBoundingClientRect().width);
 				const fullTimeline = 100;
 				const seanceWidth = (filmItems.find((x) => x.id === element.seance_filmid).film_duration) / 10;
+				const openHour = 10;
+				const workDuration = 13;
 				// const seanceWidth = 20;
 				seanceItem.style.width = seanceWidth + '%';
-				seanceItem.style.left = ((+seanceTime.slice(0, -2) - 10) * (fullTimeline / 13)) + '%';
+				seanceItem.style.left = ((+seanceTime.slice(0, -2) - openHour) * (fullTimeline / workDuration)) + '%';
 
 				const bgColor = window.getComputedStyle(seanceFilm).backgroundColor;
 				seanceItem.style.background = bgColor;
