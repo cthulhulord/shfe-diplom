@@ -78,14 +78,20 @@ function renderSessionsList (halls, seances) {
 					<p class="admin-sessions__session-time">${element.seance_time}</p>`)
 				seanceItem.setAttribute('draggable', 'true');
 
-				// const fullTimeline = Math.floor(sessionsList.getBoundingClientRect().width);
 				const fullTimeline = 100;
-				const seanceWidth = (filmItems.find((x) => x.id === element.seance_filmid).film_duration) / 10;
-				const openHour = 10;
-				const workDuration = 13;
-				// const seanceWidth = 20;
+				const workDuration = 1440;
+				const seanceWidth = (filmItems.find((x) => x.id === element.seance_filmid).film_duration) * (fullTimeline / workDuration);
+				let seanceHour;
+				if (seanceTime.slice(0, -3) == 0) {
+					seanceHour = +seanceTime.slice(1, -2)
+				} else {
+					seanceHour = +seanceTime.slice(0, -2);
+				}
+
+				const seanceStart = +(seanceHour + (seanceTime.slice(2) / 60)) * 60;
+
 				seanceItem.style.width = seanceWidth + '%';
-				seanceItem.style.left = ((+seanceTime.slice(0, -2) - openHour) * (fullTimeline / workDuration)) + '%';
+				seanceItem.style.left = seanceStart * (fullTimeline / workDuration) + '%';
 
 				const bgColor = window.getComputedStyle(seanceFilm).backgroundColor;
 				seanceItem.style.background = bgColor;
