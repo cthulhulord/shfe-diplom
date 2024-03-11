@@ -112,7 +112,7 @@ function renderSessionsList (halls, seances) {
 
 	})
 
-	const seanceBlock = [...document.querySelectorAll('.admin-sessions__session')];
+	const seanceBlock = [...document.querySelectorAll('.admin-sessions__session-wrapper')];
 	const deleteSeance = [...document.querySelectorAll('.admin-sessions__session-delete')];
 
 	seanceBlock.forEach((element, index) => {
