@@ -41,4 +41,9 @@ function saveHallPrices () {
 	data.savePrices(params);
 }
 
+function cancelHallPrices () {
+	getHallPrices(pricesActiveHall.id);
+}
+
 pricesConfirm.addEventListener('click', saveHallPrices);
+pricesCancel.addEventListener('click', cancelHallPrices)

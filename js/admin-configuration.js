@@ -101,5 +101,10 @@ async function saveHallSeats () {
 
 }
 
+function cancelHallSeats () {
+	getHallSeats(configActiveHall.id);
+}
+
 configConfirm.addEventListener('click', saveHallSeats);
+configCancel.addEventListener('click', cancelHallSeats);
 
